@@ -49,7 +49,7 @@
 
     </section>
 </body>
-<script src="js/jquery-3.5.1.slim.min.js"></script>
+<script src="js/jquery-3.6.0.min.js"></script>
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script>
@@ -59,16 +59,20 @@
         pass = document.getElementById("pass").value;
         
         //$.get("login.php").done(respuesta);
+        $.get("login.php?user="+user+"&pass="+pass, respuesta);
+        // $.ajax({
+        //         url: "login.php?user="+user+"&pass="+pass,
+        //         success: respuesta,
+        //     });
+        
+    }
 
-        if(user=="admin" && pass=="123"){
+    function respuesta(data){
+        if(data=="si"){
             location.href = "temas.html";
         }else{
             $("#alerterror").show();
         }
-    }
-
-    function respuesta(data){
-        alert(data);
     }
 </script>
 </html>
