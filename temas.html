@@ -35,8 +35,9 @@
         </div>
         <div class="card-body">
           <form action="">
-            <input class="form-control mb-3" type="text" name="" id="">
-            <input class="btn btn-primary mb-3" type="submit" value="Agregar">
+            <input class="form-control mb-3" type="text" name="" id="nombretema" placeholder="Nombre tema">
+            <input class="form-control mb-3" type="text" name="" id="descripcion" placeholder="Descripcion">
+            <input class="btn btn-primary mb-3" type="submit" value="Agregar" onclick="agregar()">
             </form>
         </div>
       </div>
@@ -50,7 +51,7 @@
                 <th>Acciones</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="tablatemas">
             <tr>
                 <td>1</td>
                 <td>Programacion</td>
@@ -96,4 +97,59 @@
     <address>Webmaster: joseiraic@gmail.com</address>
 </footer>
 </body>
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script>
+    llenartabla();
+
+    function llenartabla(){
+        $.getJSON("temasconsulta.php", respuesta);
+    }
+
+    function respuesta(data){
+        let tabla = "";
+        for(i=0; i<data.length; i++){
+            tabla += "<tr>";
+            tabla += "<td>" + data[i].id + "</td>";
+            tabla += "<td>" + data[i].tema + "</td>";
+            tabla += "<td>" + data[i].descripcion + "</td>";
+            tabla += "<td>";
+            tabla += "<button onClick='modificar(" + data[i].id + ")' class='btn btn-outline-success'><img src='img/edit.png' width='20px' height='20px'></button>";
+            tabla += "<button onClick='eliminar(" + data[i].id + ")' class='btn btn-outline-danger'><img src='img/close.png' width='20px' height='20px'></button>";
+            tabla += "</td></tr>";
+        }
+        $("#tablatemas").html(tabla);
+    }
+
+    function agregar(){
+        n = $("#nombretema").val();
+        d = $("#descripcion").val();
+        $.get("temasagregar.php?tema="+n+"&desc="+d, function(data){
+            if(data=="si"){
+                alert("Datos guardados");
+                $("#nombretema").val("");
+                $("#descripcion").val("");
+            }else{
+                alert("No se pudo almacenar");
+            }
+        });
+    }
+
+    function eliminar(id){
+        $.get("temaseliminar.php?id="+id, function(data){
+            if(data=="si"){
+                alert("Datos elimnados");
+                llenartabla();
+            }else{
+                alert("No se pudo eliminar");
+            }
+        });
+    }
+
+    function modificar(id){
+        alert(id);
+    }
+
+</script>
 </html>
