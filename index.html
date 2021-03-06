@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="discusion.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="estilo.css">
+    <title>Foro de Iraic</title>
+</head>
+
+<body>
+    <header>
+        <img src="header.png" alt="" class="img-fluid">
+    </header>
+    <nav class="navbar navbar-dark fondoMenu">
+        <a href="" class="navbar-brand">
+            <img src="discusion.png" alt="" width="30px">
+            Mi foro
+        </a>
+    </nav>
+    <section class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col">
+                <form action="">
+                    <h3>Bienvenidos al Foro</h3>
+                    <hr>
+                    <label for="">Usuario:</label>
+                    <input class="form-control" type="text" name="user" id="user" placeholder="Escribe tu nombre">
+                    <br>
+                    <label for="">Contraseña:</label>
+                    <input class="form-control" type="password" name="pass" id="pass" placeholder="Escribe la contraseña">
+                    <br>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" id="alerterror">
+                        <strong>Error:</strong>de usuario/contraseña
+                    </div>
+                    <div class="text-right">
+                        <input class="btn btn-primary" type="button" value="Entrar" onclick="login()">
+                    </div>
+                </form>
+                <br>
+                <a href="registro.html">Resgitrate aqui</a>
+            </div>
+            <div class="col"></div>
+        </div>
+
+    </section>
+</body>
+<script src="js/jquery-3.5.1.slim.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script>
+    $("#alerterror").hide();
+    function login(){
+        user = document.getElementById("user").value;
+        pass = document.getElementById("pass").value;
+        
+        //$.get("login.php").done(respuesta);
+
+        if(user=="admin" && pass=="123"){
+            location.href = "temas.html";
+        }else{
+            $("#alerterror").show();
+        }
+    }
+
+    function respuesta(data){
+        alert(data);
+    }
+</script>
+</html>
