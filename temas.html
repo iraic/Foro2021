@@ -115,7 +115,7 @@
             tabla += "<td>" + data[i].tema + "</td>";
             tabla += "<td>" + data[i].descripcion + "</td>";
             tabla += "<td>";
-            tabla += "<button onClick='modificar(" + data[i].id + ")' class='btn btn-outline-success'><img src='img/edit.png' width='20px' height='20px'></button>";
+            tabla += "<button onClick='modificar(" + JSON.stringify(data[i]) + ")' class='btn btn-outline-success'><img src='img/edit.png' width='20px' height='20px'></button>";
             tabla += "<button onClick='eliminar(" + data[i].id + ")' class='btn btn-outline-danger'><img src='img/close.png' width='20px' height='20px'></button>";
             tabla += "</td></tr>";
         }
@@ -147,9 +147,48 @@
         });
     }
 
-    function modificar(id){
-        alert(id);
+    function modificar(datos){
+        $('#ventanamodal').modal('show');
+        $("#editaridtema").val(datos.id);
+        $("#editarnombretema").val(datos.tema);
+        $("#editardescripcion").val(datos.descripcion);
+    }
+
+    function guardarCambios(){
+        id = $("#editaridtema").val();
+        n = $("#editarnombretema").val();
+        d = $("#editardescripcion").val();
+        $.get("temasmodificar.php?tema="+n+"&desc="+d+"&id="+id, function(data){
+            if(data=="si"){
+                $('#ventanamodal').modal('hide');
+                llenartabla();
+            }else{
+                alert("No se pudo almacenar");
+            }
+        });
     }
 
 </script>
 </html>
+<!-- Genera una ventana modal para editar -->
+<div class="modal" tabindex="-1" id="ventanamodal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <input class="form-control mb-3" type="text" name="" id="editaridtema" placeholder="Nombre tema" disabled>
+            <input class="form-control mb-3" type="text" name="" id="editarnombretema" placeholder="Nombre tema">
+            <input class="form-control mb-3" type="text" name="" id="editardescripcion" placeholder="Descripcion">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="guardarCambios()">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>

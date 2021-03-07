@@ -2,3 +2,4 @@ create database forodb;
 use forodb;
 create table users(user varchar(20) primary key, pass varchar(64), rol char);
 insert into users values('admin', '123', 'A');
+create table temas(id int primary key, tema varchar(20), descripcion varchar(100));
